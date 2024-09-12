@@ -1,0 +1,580 @@
+// Script.js 1
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Load background image
+    const img = new Image();
+    img.src = './images/background2.jpg'; // Background Image
+
+    img.onload = function() {
+        // Draw the background image on the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Set font for the text
+        ctx.font = '50pt Paytone One';
+        ctx.fillStyle = '#015963'; // Text color
+        ctx.textAlign = 'left';
+
+        // Draw input text on the canvas
+        ctx.fillText(officeName.split(' ')[0], 125, 260); // First line
+        ctx.fillText(officeName.split(' ')[1], 125, 335); // Second line
+
+        // Enable the download button after preview is rendered
+        document.getElementById('downloadBtn').disabled = false;
+    };
+}
+
+function downloadImage() {
+    const officeName = document.getElementById('officeName').value;
+    const canvas = document.getElementById('canvas');
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+
+
+
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1110;
+    canvas.height = 500;
+
+    // Load background image
+    const img = new Image();
+    img.src = './images/background2.jpg'; // Background Image
+
+    img.onload = function() {
+        // Draw the background image on the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Set font for the text
+        ctx.font = '50pt Paytone One';
+        ctx.fillStyle = '#015963'; // Text color
+        ctx.textAlign = 'left';
+
+        // Draw input text on the canvas
+        ctx.fillText(officeName.split(' ')[0], 125, 260); // First line
+        ctx.fillText(officeName.split(' ')[1], 125, 335); // Second line
+
+        // Download the image automatically
+        downloadImage(canvas, officeName);
+    };
+}
+
+function downloadImage(canvas, officeName) {
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+
+
+//3
+
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Load background image
+    const img = new Image();
+    img.src = './images/background2.jpg'; // Background Image
+
+    img.onload = function() {
+        // Draw the background image on the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Set font for the text
+        ctx.font = '50pt Paytone One';
+        ctx.fillStyle = '#015963'; // Text color
+        ctx.textAlign = 'left';
+
+        // Draw input text on the canvas
+        ctx.fillText(officeName.split(' ')[0], 125, 260); // First line
+        ctx.fillText(officeName.split(' ')[1], 125, 335); // Second line
+
+        // Enable the download button after preview is rendered
+        document.getElementById('downloadBtn').disabled = false;
+    };
+}
+
+function downloadImage() {
+    const officeName = document.getElementById('officeName').value;
+    const canvas = document.getElementById('canvas');
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+
+//index.html
+
+
+            <br><br>
+            <div class="priview">
+                <h1>Preview</h1>
+                <div id="canvas-container">
+                    <canvas id="canvas" width="1110" height="500"></canvas>
+                    <br>
+                    <button id="downloadBtn" class="btn btn-success" onclick="downloadImage()" disabled>Download</button>
+                </div>
+            </div>
+
+
+
+//js
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Insert design backgroundd
+    const img = new Image();
+    img.src = './images/background2.jpg'; // Background Image
+
+    img.onload = function() {
+        // Draw the background image on the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Memsiahkan perkata agar tidak terlalu panjang (enter)
+        const words = officeName.split(' ');
+
+        // Menyesuaikan ukuran font
+        let fontSize = '50pt';
+        if (words.length > 2 || officeName.length > 20) {
+            fontSize = '40pt'; // Reduce font size if text is too long
+        }
+
+        // Mengartur posisi, warna dan tipe font
+        ctx.font = `${fontSize} Paytone One`;
+        ctx.fillStyle = '#015963'; // Text color
+        ctx.textAlign = 'left';
+
+        // Mengatur ukuran antar baris
+        const lineHeight = 55; // Ukuran untuk spacing between
+        let yPosition = 260; 
+        const maxWordsPerLine = 1;
+
+        // Loop kata dan membuat baris
+        let currentLine = '';
+        words.forEach((word, index) => {
+            const testLine = currentLine + word + ' ';
+            const testWidth = ctx.measureText(testLine).width;
+
+            // Pindah kebaris berikut (enter) jika lebih dari batas lebar
+            if (testWidth > canvas.width - 150 || (index % maxWordsPerLine === 0 && currentLine)) {
+                ctx.fillText(currentLine.trim(), 125, yPosition);
+                currentLine = word + ' ';
+                yPosition += lineHeight;
+            } else {
+                currentLine = testLine;
+            }
+        });
+
+        
+        ctx.fillText(currentLine.trim(), 125, yPosition);
+
+        // Enable the download button after preview is rendered
+        document.getElementById('downloadBtn').disabled = false;
+    };
+}
+
+function downloadImage() {
+    const officeName = document.getElementById('officeName').value;
+    const canvas = document.getElementById('canvas');
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+
+
+/// 4
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1110;
+    canvas.height = 500;
+
+    // Bersihkan canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Masukkan gambar latar belakang
+    const img = new Image();
+    img.src = './images/background2.jpg'; // Gambar latar belakang
+
+    img.onload = function() {
+        // Gambar latar belakang pada canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Pisahkan kata agar tidak terlalu panjang (enter)
+        const words = officeName.split(' ');
+
+        // Menyesuaikan ukuran font
+        let fontSize = '50pt';
+        if (words.length > 2 || officeName.length > 20) {
+            fontSize = '40pt'; // Kecilkan ukuran font jika teks terlalu panjang
+        }
+
+        // Mengatur posisi, warna, dan tipe font
+        ctx.font = `${fontSize} Paytone One`;
+        ctx.fillStyle = '#015963'; // Warna teks
+        ctx.textAlign = 'left';
+
+        // Mengatur ukuran antar baris
+        const lineHeight = 60; // Ukuran jarak antar baris
+        let yPosition = 260; 
+        const maxWordsPerLine = 1;
+
+        // Loop melalui kata dan buat baris
+        let currentLine = '';
+        words.forEach((word, index) => {
+            const testLine = currentLine + word + ' ';
+            const testWidth = ctx.measureText(testLine).width;
+
+            // Pindah ke baris berikut jika lebih dari batas lebar
+            if (testWidth > canvas.width - 150 || (index % maxWordsPerLine === 0 && currentLine)) {
+                ctx.fillText(currentLine.trim(), 125, yPosition);
+                currentLine = word + ' ';
+                yPosition += lineHeight;
+            } else {
+                currentLine = testLine;
+            }
+        });
+
+        ctx.fillText(currentLine.trim(), 125, yPosition);
+
+        // Otomatis unduh gambar setelah generate
+        downloadImage(canvas, officeName);
+    };
+}
+
+function downloadImage(canvas, officeName) {
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+
+
+
+
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    // canvas.width = 1110;
+    // canvas.height = 500;
+
+    // Bersihkan canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Masukkan gambar latar belakang
+    const img = new Image();
+    img.src = './images/background.jpg'; // Gambar latar belakang
+
+    img.onload = function() {
+        // Gambar latar belakang pada canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Pisahkan kata agar tidak terlalu panjang (enter)
+        const words = officeName.split(' ');
+
+        // Menyesuaikan ukuran font
+        let fontSize = '50pt';
+        if (words.length > 2 || officeName.length > 20) {
+            fontSize = '40pt'; // Kecilkan ukuran font jika teks terlalu panjang
+        }
+
+        // Mengatur posisi, warna, dan tipe font
+        ctx.font = `${fontSize} Paytone One`;
+        ctx.fillStyle = '#015963'; // Warna teks
+        ctx.textAlign = 'left';
+
+        // Mengatur ukuran antar baris
+        const lineHeight = 60; // Ukuran jarak antar baris
+        let yPosition = 260; 
+        const maxWordsPerLine = 1;
+
+        // Loop melalui kata dan buat baris
+        let currentLine = '';
+        words.forEach((word, index) => {
+            const testLine = currentLine + word + ' ';
+            const testWidth = ctx.measureText(testLine).width;
+
+            // Pindah ke baris berikut jika lebih dari batas lebar
+            if (testWidth > canvas.width - 150 || (index % maxWordsPerLine === 0 && currentLine)) {
+                ctx.fillText(currentLine.trim(), 125, yPosition);
+                currentLine = word + ' ';
+                yPosition += lineHeight;
+            } else {
+                currentLine = testLine;
+            }
+        });
+
+        ctx.fillText(currentLine.trim(), 125, yPosition);
+
+        // Masukkan gambar QR code
+        const qrCode = new Image();
+        qrCode.src = './images/QrCode.png';
+
+        // Otomatis unduh gambar setelah generate
+        // downloadImage(canvas, officeName);
+        qrCode.onload = function() {
+            // Gambar QR code di canvas
+            ctx.drawImage(qrCode, canvas.width - 300, 140, 150, 150); // Adjust position and size
+            // Otomatis unduh gambar setelah generate
+            downloadImage(canvas, officeName);
+        };
+    };
+}
+
+function downloadImage(canvas, officeName) {
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+
+//5
+
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    //panjang dan lebar ukuran gambar
+    // canvas.width = 4500;
+    // canvas.height = 2030;
+
+    // Bersihkan canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Masukkan gambar latar belakang
+    const img = new Image();
+    img.src = './images/background.jpg'; // Gambar latar belakang
+
+    img.onload = function() {
+        // Gambar latar belakang pada canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Pisahkan kata agar tidak terlalu panjang (enter)
+        const words = officeName.split(' ');
+
+        // Menyesuaikan ukuran font
+        let fontSize = '50pt';
+        if (words.length > 2 || officeName.length > 20) {
+            fontSize = '40pt'; // Kecilkan ukuran font jika teks terlalu panjang
+        }
+
+        // Mengatur posisi, warna, dan tipe font
+        ctx.font = `${fontSize} Paytone One`;
+        ctx.fillStyle = '#015963'; // Warna teks
+        ctx.textAlign = 'left';
+
+        // Mengatur ukuran antar baris
+        const lineHeight = 60; // Ukuran jarak antar baris
+        let yPosition = 260; 
+        const maxWordsPerLine = 1;
+
+        // Loop melalui kata dan buat baris
+        let currentLine = '';
+        words.forEach((word, index) => {
+            const testLine = currentLine + word + ' ';
+            const testWidth = ctx.measureText(testLine).width;
+
+            // Pindah ke baris berikut jika lebih dari batas lebar
+            if (testWidth > canvas.width - 150 || (index % maxWordsPerLine === 0 && currentLine)) {
+                ctx.fillText(currentLine.trim(), 125, yPosition);
+                currentLine = word + ' ';
+                yPosition += lineHeight;
+            } else {
+                currentLine = testLine;
+            }
+        });
+
+        ctx.fillText(currentLine.trim(), 125, yPosition);
+
+        // Masukkan gambar QR code
+        const qrCode = new Image();
+        qrCode.src = './images/QrCode.png';
+
+        // Otomatis unduh gambar setelah generate
+        // downloadImage(canvas, officeName);
+        qrCode.onload = function() {
+            // Gambar QR code di canvas
+            ctx.drawImage(qrCode, canvas.width - 
+                415, // posisi Y
+                135, // posisi X 
+                275, //panjang
+                275 //lebar
+            );
+            // Otomatis unduh gambar setelah generate
+            downloadImage(canvas, officeName);
+        };
+    };
+}
+
+function downloadImage(canvas, officeName) {
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+
+
+// Masukkan gambar QR code
+        const qrCode = new Image();
+        qrCode.src = './images/QrCode.png';
+
+        // Otomatis unduh gambar setelah generate
+        qrCode.onload = function() {
+            // Gambar QR code di canvas
+            ctx.drawImage(qrCode, canvas.width - 
+                1675, // posisi x
+                555, // posisi y
+                1100, //panjang
+                1100 //lebar
+            );
+            // Otomatis unduh gambar setelah generate
+            downloadImage(canvas, officeName);
+        };
+
+
+
+
+
+function generate() {
+    const officeName = document.getElementById('officeName').value;
+
+    // inputan harus terisi
+    if (!officeName) {
+        alert("Please enter an office name");
+        return;
+    }
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Load background image
+    const img = new Image();
+    img.src = './images/background.jpg'; // Background Image
+
+    img.onload = function() {
+        // Draw the background image on the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Set font for the text
+        ctx.font = '200pt Paytone One';
+        ctx.fillStyle = '#015963'; // Text color
+        ctx.textAlign = 'left';
+
+        // Draw input text on the canvas
+        ctx.fillText(officeName.split(' ')[0], 500, 1100); // First line
+        ctx.fillText(officeName.split(' ')[1], 500, 1350); // Second line
+
+        // Enable the download button after preview is rendered
+        document.getElementById('downloadBtn').disabled = false;
+
+        
+    };
+}
+
+function downloadImage() {
+    const officeName = document.getElementById('officeName').value;
+    const canvas = document.getElementById('canvas');
+    const link = document.createElement('a');
+    
+    // Prefix Hygienix and set the file name
+    link.download = `Hygienix-${officeName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
